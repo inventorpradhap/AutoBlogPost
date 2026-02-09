@@ -22,5 +22,6 @@ jobs:
         
     - name: Run blog chain
       env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}  # Add this secret
+        GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
       run: python daily_blog_chain.py
+
