@@ -1,0 +1,26 @@
+name: Daily Kindle Blog Automation
+on:
+  schedule:
+    - cron: '30 8 * * *'  # 8:30 UTC = 2:00 PM IST daily
+  workflow_dispatch:     # Manual trigger button
+
+jobs:
+  automate-blog:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run blog chain
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}  # Add this secret
+      run: python daily_blog_chain.py
